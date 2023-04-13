@@ -1,0 +1,90 @@
+py -m venv venv
+
+.\venv\Scripts\activate
+
+
+*con entorno activo
+pip install django
+
+django-admin --version
+
+*Crear proyecto
+django-admin startproject djangocrud . 
+
+
+md Aplicaciones
+
+cd Aplicaciones
+
+---Creamos app
+django-admin startapp Academico
+
+cd.. 
+
+
+en settings 
+Ahora para agregar la aplicacion y ser reconocida en settings dentro de la carpeta principal agregamos en installed apps el nombre de la app
+
+hacemos cambios en admin.py lo agregamos
+
+cambiamos la db
+
+después el idioma y timezone
+
+
+Creamos en academico el modelo
+
+
+python manage.py migrate
+
+
+python manage.py makemigrations
+
+
+python manage.py createsuperuser
+
+
+diana
+123tamarindo
+dr8239985@gmail.com
+
+
+python manage.py migrate
+
+
+
+
+*Correrlo
+python manage.py runserver
+
+*para administrar cursos
+http://127.0.0.1:8000/admin
+
+
+cancelamos con ctrl c
+
+creamos en academico la carpeta templates 
+creamos archivo urls.py
+
+en templates creamosmcurso.html
+hacemos cambios en urls.py y en views
+
+
+
+
+
+
+
+control c para crear apps
+
+*Iniciar una aplicacion
+python manage.py startapp tasks  ---tasks es el nombre del proyecto 
+
+
+Ahora para agregar la aplicacion y ser reconocida en settings dentro de la carpeta principal agregamos en installed apps el nombre de la app
+'tasks'
+
+
+views es para mostrar algo cuando una url sea visitada
+
+deactivate para desactivar entorno
