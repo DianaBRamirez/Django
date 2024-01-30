@@ -1,0 +1,8 @@
+Usuario: diana, Fecha: 2024-01-28 20:39:50.301419, Acción: Registro de Tarea
+Usuario: diana, Fecha: 2024-01-28 20:43:28.025755, Acción: Registro de Tarea: eijfsjf
+Usuario: diana, Fecha: 2024-01-28 20:44:00.994630, Acción: Tarea: hola completada
+Usuario: diana, Fecha: 2024-01-29 16:04:09.624410, Acción: Tarea (hola) eliminada
+Usuario: diana, Fecha: 2024-01-29 16:10:12.079075, Acción: Tarea (prueba) completada
+Usuario: diana, Fecha: 2024-01-29 17:21:00.630331, Acción: Tarea (eijfsjf) eliminada
+Usuario: diana, Fecha: 2024-01-29 17:22:01.817635, Acción: Registro de Tarea (skjgh) 
+Usuario: diana, Fecha: 2024-01-29 18:22:52.902018, Acción: Se editó la Tarea con id = 5 

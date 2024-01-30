@@ -8,21 +8,18 @@
         <h2>Edición de Curso</h2>
         <div class="card">
             <div class="card-body">
-                <form action="/editarCurso/" method="POST">{% csrf_token %}
-                    <div class="form-group">
-                        <input type="text" id="txtCodigo" name="txtCodigo" value="{{curso.codigo}}" class="form-control" placeholder="Código"
-                            minlength="6" maxlength="6" readonly required>
+                <form action="/modificar/{{curso.id}}" method="POST">{% csrf_token %}
+                  
+                    <div class="form-group mb-2">
+                        <textarea id="txtAct" name="txtAct" class="form-control"   required >{{curso.txtAct}}</textarea>
                     </div>
-                    <div class="form-group">
-                        <input type="text" id="txtNombre" name="txtNombre" value="{{curso.nombre}}" class="form-control" placeholder="Nombre"
-                            maxlength="50" required>
+                    <div class="form-group mb-2">
+                        <input type="datetime-local" id="dateFecha" name="dateFecha" class="form-control" value="{{curso.fecha | date:'Y-m-d\TH:i:s'}}" placeholder="Fecha límite" required />
                     </div>
-                    <div class="form-group">
-                        <input type="text" id="numCreditos" name="numCreditos" value="{{curso.creditos}}" class="form-control" min="1" max="9"
-                            value="1" required>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                   
+                    <div class="form-group text-center">
+                        <a href="{% url 'tareas' %}" class="btn btn-outline-dark  ">Cancelar</a>
+                        <button type="submit" class="btn btn-outline-success">Guardar</button>
                     </div>
                 </form>
             </div>

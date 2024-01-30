@@ -1,153 +1,118 @@
+{% extends './base.html' %}
+<!-- Se incluye en archivo de base con lo demás -->
+
+{% block title %}
+  Cursos
+{% endblock %} <!-- Se cambia el título -->
+
+{% block body %}
+  <!-- Esta es para el navbar -->
+  <style type="text/css">
+    select {
+      width: 10em;
+    }
+  </style>
 
 
-{% extends "./base.html" %}<!--Se incluye en archivo de base con lo demás -->
 
-{% block title %} Cursos {% endblock %} <!-- Se cambia el título-->
+  <div class="row">
+    <div class="col-sm-4 col-md-3 col-lg-2 col-xl-3">
+      <!-- creamos columnas -->
+      {% if messages %}
+        <!-- Si existen mensajes -->
+        {% for message in messages %}
+          <!-- Por cada mensaje -->
 
-{% block body %} <!-- Esta es para el navbar -->
-
-<div class="row">
-    <div class="col-sm-4 col-md-3 col-lg-2 col-xl-3"> <!--creamos columnas -->
-        {% if messages %} <!--Si existen mensajes -->
-        {% for message in messages %} <!-- Por cada mensaje-->
-      
-        <div id="box" class="alert alert-success alert-dismissible fade show shadow">
+          <div id="box" class="alert alert-success alert-dismissible fade show shadow">
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             <strong class="text-dark">{{ message }}</strong>
-        </div>
+          </div>
+        {% endfor %} <!-- Termina for -->
+      {% endif %} <!-- Termina condición -->
 
-        {% endfor %} <!--Termina for -->
-        {% endif %} <!--Termina condición -->
-        <h2>Gestión de Curso</h2> <!--Título -->
-        <div class="card">
-            <div class="card-body">
-                <form action="registrarCurso/" method="POST">{% csrf_token %} <!--Indica que se irá a dicha ruta y es método post -->
-                    <div class="form-group"> <!--Empieza el formulario -->
-                        <input type="number" id="txtCodigo" name="txtCodigo" class="form-control" placeholder="Código"
-                            minlength="6" maxlength="6"  onkeypress="return verificaNumeros(event);" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre"
-                            maxlength="50" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="number" id="numCreditos" name="numCreditos" class="form-control" min="1" max="9"
-                            value="1" required>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
-                    </div>
-                </form>
+       <!-- Título -->
+      <div class="card">
+        <div class="card-body">
+          <h5 class="text-center">Crear tarea</h5>
+          <form action="registrarCurso/" method="POST">
+            {% csrf_token %} <!-- Indica que se irá a dicha ruta y es método post -->
+            <div class="form-group mb-2">
+              <!-- Empieza el formulario -->
+              <textarea id="txtAct" name="txtAct" class="form-control" placeholder="Tarea" required ></textarea>
             </div>
+            <div class="form-group mb-2">
+              <input type="datetime-local" id="dateFecha" name="dateFecha" class="form-control" placeholder="Fecha límite" required />
+            </div>
+            <div class="form-group text-center">
+              <button type="submit" class="btn btn-outline-success">Guardar</button>
+            </div>
+          </form>
         </div>
-    </div> 
-    <div class="col-sm-8 col-md-9 col-lg-9 col-xl-9"> <!-- definimos columnas-->
-        <h1>Listado de Cursos</h1>  <!--Título arriba de tabla -->
-            <!--Botón de registro -->
-    <a class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#RegistroGrupo">Registrar</a><br>
-    <br />
-        <div class="table-responsive py-2">  <!--Hacemos responsiva -->
-            <table class="table table-bordered " cellspacing="0" width="100%" id="myTable" > 
-                <thead class="table-dark"> <!--Encabezados -->
-                    <tr >
-                        <th>#</th>
-                      
-                        <th>Código</th>
-                        <th>Nombre</th>
-                        <th>Créditos</th>
-                     
-                        <th >Opciones</th><!--Usa dos espacios -->
-                   
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    {% for c in cursos %} <!-- Usamos ciclo for para imrpimir cursos-->
-                   
-                    <tr>
-                        <td>{{forloop.counter}}</td> <!--Hacemos contador -->
-                       
-                        <td>{{c.codigo}}</td> <!--Imprimimos lo de la tabla -->
-                        <td>{{c.nombre}}</td>
-                        <td>{{c.creditos}}</td>
-                       
-                    <!--  IMPRIME LA MULTIPLICACION DE CREIDTOS * CREDITOS  <td>{{c.total}} </td>  -->
-                 <!--  
+      </div>
+    </div>
+    <div class="col-sm-8 col-md-9 col-lg-9 col-xl-9">
+      <!-- definimos columnas -->
+      <h4>Listado de tareas</h4> <!-- Título arriba de tabla -->
+      <!-- Botón de registro -->
+      {% comment %} <a class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#RegistroGrupo">Registrar</a><br /> {% endcomment %}
+
+      <div class="table-responsive py-2" >
+        <!-- Hacemos responsiva -->
+        <table class="table table-bordered" cellspacing="0" width="100%" id="myTable" >
+          <thead style="background-color: #e3f2fd;">
+            <!-- Encabezados -->
+            <tr>
+              <th>#</th>
+              <th>Tarea</th>
+              <th>Fecha límite</th>
+              <th>Estado</th>
+              <th>Opciones</th>
+              <!-- Usa dos espacios -->
+            </tr>
+          </thead>
+          <tbody>
+            {% for c in tarea %}
+              <!-- Usamos ciclo for para imrpimir cursos -->
+
+              <tr>
+                <td>{{ forloop.counter }}</td> <!-- Hacemos contador -->
+                <td>{{ c.txtAct }}</td> <!-- Imprimimos lo de la tabla -->
+                <td>{{ c.fecha }}</td>
+                {%if c.estado == 1 %}
+                <td>Pendiente</td>
+                {%else%}
+                <td>Completada</td>
+                {% endif%}
+
+                <!-- IMPRIME LA MULTIPLICACION DE CREIDTOS * CREDITOS <td>{{c.total}} </td> -->
+                <!--   
                     PRUEBA DE IF PARA IMPRESION
                     {% if c.creditos == 1 %}
                     <td>Hola</td>
                     {% else %}
                     <td></td>
-                    {% endif %}      -->
-                        <td>
-                         <!--    <a href="pruebaCurso/{{c.codigo}}" class="btn btn-info">Cambiar</a>-->
-                        <a href="edicionCurso/{{c.codigo}}" class="btn btn-info">Editar</a><!--Nos manda a esa ruta con el id -->
-                      <a href="eliminarCurso/{{c.id}}" class="btn btn-danger btnEliminacion">Eliminar</a>
-                    </td>
-                   
-                   
-                    </tr>
-                    {% endfor %} <!--Termina ciclo for -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div> 
+                    {% endif %}       -->
+                <td>
+                  {%if c.estado == 1 %}
+                  <a href="edicionCurso/{{ c.id }}" class="btn bi bi-check-lg"></a>
+                  <a href="editarCurso/{{ c.id }}" class="btn bi bi-pencil-square"></a>
+                  {% endif%}
 
-
-    <!--Modal-Hoja de registro de grupo-->
-    <div class="modal fade" id="RegistroGrupo" tabindex="-1" aria-labelledby="RegistroGrupo" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Hoja de grupos</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <div class="container-fluid">
-                <form action="registrarCurso/" method="POST">{% csrf_token %}
-                  <div class="row">
-                    <center>
-                      <label> Cod:</label>
-                      <input type="number" id="txtCodigo" name="txtCodigo" class="form-control" placeholder="Código"
-                      minlength="6" maxlength="6"  onkeypress="return verificaNumeros(event);" required>
-  
-                      <label> Nombre:</label>
-                      <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre"
-                      maxlength="50" required>
-
-                      <label> Créditos:</label>
-                      <input type="number" id="numCreditos" name="numCreditos" class="form-control" min="1" max="9"
-                      value="1" required>
-
-                    </center>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-dark" >Registrar</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+                  <a href="eliminarCurso/{{ c.id }}" class="btn  btnEliminacion bi bi-trash"></a>
+                </td>
+              </tr>
+            {% endfor %} <!-- Termina ciclo for -->
+          </tbody>
+        </table>
       </div>
-
-
-
-
-
-
-
+    </div>
+  </div>
 
 {% endblock %}
 
-
-<!--  EJEMPLO DE COMO SE MANDA A LLAMAR 
+<!--   EJEMPLO DE COMO SE MANDA A LLAMAR 
 <ul>{% for c in cursos%}
     <li>{{c.nombre}}</li>
     {% endfor %}
 </ul>
--->
-
-
+ -->
